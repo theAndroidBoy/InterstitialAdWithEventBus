@@ -3,10 +3,13 @@ package com.easyapps.onemoretestproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class FirstActivity extends AppCompatActivity {
@@ -44,6 +47,10 @@ public class FirstActivity extends AppCompatActivity {
 
             @Override
             public void onAdClosed() {
+                Log.i("flow", "onAdClosed: ");
+                loadInterstitial();
+                CustomMessageEvent event = new CustomMessageEvent();
+                EventBus.getDefault().post(event);
             }
         });
 
