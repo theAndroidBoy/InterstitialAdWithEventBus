@@ -8,13 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import org.greenrobot.eventbus.EventBus;
-
 
 public class FirstActivity extends AppCompatActivity {
 
@@ -66,6 +64,7 @@ public class FirstActivity extends AppCompatActivity {
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
                 startActivity(intent);
                 showInterstitial();

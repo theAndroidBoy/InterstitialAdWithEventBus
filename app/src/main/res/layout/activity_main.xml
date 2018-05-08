@@ -185,8 +185,6 @@
         app:layout_constraintStart_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
-  />
-
     <TextView
         android:id="@+id/splashTextView"
         android:layout_width="wrap_content"
