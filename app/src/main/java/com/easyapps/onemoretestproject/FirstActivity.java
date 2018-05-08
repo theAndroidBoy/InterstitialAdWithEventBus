@@ -1,10 +1,14 @@
 package com.easyapps.onemoretestproject;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -15,6 +19,8 @@ import org.greenrobot.eventbus.EventBus;
 public class FirstActivity extends AppCompatActivity {
 
     private InterstitialAd mInterstitialAd;
+    private ImageView splash1,splash2;
+    private TextView splashTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +29,27 @@ public class FirstActivity extends AppCompatActivity {
 
         mInterstitialAd = newInterstitialAd();
         loadInterstitial();
+
+        splash1=findViewById(R.id.splash1);
+        splash2=findViewById(R.id.splash2);
+        splashTextView=findViewById(R.id.splashTextView);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                splash1.setVisibility(View.GONE);
+                splash2.setVisibility(View.GONE);
+                splashTextView.setVisibility(View.GONE);
+
+//                Intent i = new Intent(SplashScreen.this, MainActivity.class);
+//                startActivity(i);
+//                finish();
+            }
+        }, 4000);
+
     }
 
-    public void openInterstitialAdActivity(View view) {
+    public void connectButton(View view) {
         Intent intent = new Intent(this, SecondActivity.class);
         startActivity(intent);
         showInterstitial();
