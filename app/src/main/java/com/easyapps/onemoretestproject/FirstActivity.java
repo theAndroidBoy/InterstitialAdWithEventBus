@@ -18,34 +18,41 @@ import org.greenrobot.eventbus.EventBus;
 
 public class FirstActivity extends AppCompatActivity {
 
+    Runnable runnable;
+    Handler handler;
     private InterstitialAd mInterstitialAd;
-    private ImageView splash1,splash2;
+    private ImageView splash1, splash2;
     private TextView splashTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //---------------------------------------------------
         mInterstitialAd = newInterstitialAd();
         loadInterstitial();
+        //------------------------------------------------------------
+        splash1 = findViewById(R.id.splash1);
+        splash2 = findViewById(R.id.splash2);
+        splashTextView = findViewById(R.id.splashTextView);
 
-        splash1=findViewById(R.id.splash1);
-        splash2=findViewById(R.id.splash2);
-        splashTextView=findViewById(R.id.splashTextView);
-
-        new Handler().postDelayed(new Runnable() {
+        //----------------------------------------------------
+        runnable = new Runnable() {
             @Override
             public void run() {
                 splash1.setVisibility(View.GONE);
                 splash2.setVisibility(View.GONE);
                 splashTextView.setVisibility(View.GONE);
-
 //                Intent i = new Intent(SplashScreen.this, MainActivity.class);
 //                startActivity(i);
 //                finish();
             }
-        }, 4000);
+        };
+        //-------------------------------------------------------------------------
+
+        handler = new Handler();
+        handler.postDelayed(runnable, 6000);
+        //----------------------------------------------------------
 
     }
 
@@ -78,7 +85,7 @@ public class FirstActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                     loadInterstitial();
+                        loadInterstitial();
                     }
                 }, 18000);
 
@@ -101,5 +108,21 @@ public class FirstActivity extends AppCompatActivity {
                 .setRequestAgent("android_studio:ad_template").build();
         mInterstitialAd.loadAd(adRequest);
     }
+    //--------------------------------------------------
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelSplash();
+    }
 
+    //------------------------------------------------------
+    private void cancelSplash() {
+        if (splash1.getVisibility() == View.VISIBLE) {
+            handler.removeCallbacks(runnable);
+            splash1.setVisibility(View.GONE);
+            splash2.setVisibility(View.GONE);
+            splashTextView.setVisibility(View.GONE);
+        }
+    }
+    //----------------------------------------------------------------------
 }
