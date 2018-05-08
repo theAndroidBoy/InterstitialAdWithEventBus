@@ -86,7 +86,7 @@ public class FirstActivity extends AppCompatActivity {
                     public void run() {
                         loadInterstitial();
                     }
-                }, 18000);
+                }, 9000);
 
             }
         });
