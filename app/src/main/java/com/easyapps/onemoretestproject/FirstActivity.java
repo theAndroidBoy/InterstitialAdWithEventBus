@@ -50,9 +50,7 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     public void connectButton(View view) {
-        Intent intent = new Intent(this, SecondActivity.class);
-        startActivity(intent);
-        showInterstitial();
+
     }
 
     private InterstitialAd newInterstitialAd() {
@@ -61,7 +59,9 @@ public class FirstActivity extends AppCompatActivity {
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-
+                Intent intent = new Intent(FirstActivity.this, SecondActivity.class);
+                startActivity(intent);
+                showInterstitial();
             }
 
             @Override
@@ -72,9 +72,16 @@ public class FirstActivity extends AppCompatActivity {
             @Override
             public void onAdClosed() {
                 Log.i("flow", "onAdClosed: ");
-                loadInterstitial();
                 CustomMessageEvent event = new CustomMessageEvent();
                 EventBus.getDefault().post(event);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                     loadInterstitial();
+                    }
+                }, 18000);
+
             }
         });
 
